@@ -1,0 +1,23 @@
+{
+  "name": "atypical-store",
+  "version": "2.0.0",
+  "description": "Catálogo Supreme con carrito y checkout",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node tests/run_tests.js",
+    "test:latency": "node tests/latency.js",
+    "pm2": "pm2 start server.js --name atypical-store"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "multer": "^2.2.0",
+    "ws": "^8.21.0"
+  }
+}

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "CP-01",
+    "categoria": "Funcional",
+    "nombre": "Configuración de la aplicación (carga de credenciales)",
+    "paso": "GET /api/config",
+    "esperado": "HTTP 200 y el frontend recibe SUPABASE_URL + SUPABASE_KEY",
+    "obtenido": "HTTP 200 — claves: SUPABASE_URL, SUPABASE_KEY, TENANT_ID, SHIPPING_TEST_ACTIVE, SHIPPING_TEST_ORDERS_COUNT, SHIPPING_TEST_MAX_ORDERS",
+    "estado": "PASÓ",
+    "extra": {
+      "SHIPPING_TEST_ACTIVE": true
+    }
+  },
+  {
+    "id": "CP-02",
+    "categoria": "Funcional",
+    "nombre": "Carga del catálogo de productos",
+    "paso": "GET /api/zapatos",
+    "esperado": "HTTP 200 y lista de zapatos en JSON",
+    "obtenido": "array con 1078 zapatos",
+    "estado": "PASÓ",
+    "extra": {
+      "xCache": "MISS"
+    }
+  },
+  {
+    "id": "CP-03",
+    "categoria": "Funcional",
+    "nombre": "Validación de datos obligatorios en el checkout",
+    "paso": "POST /api/crear-orden {}",
+    "esperado": "HTTP 400 \"Datos incompletos.\" y ninguna escritura en la base de datos",
+    "obtenido": "HTTP 400 — {\"status\":\"error\",\"message\":\"Datos incompletos.\"}",
+    "estado": "PASÓ",
+    "extra": null
+  },
+  {
+    "id": "CP-04",
+    "categoria": "Funcional",
+    "nombre": "Cotización de envío (integración con MiPaquete)",
+    "paso": "POST /api/cotizar-envio",
+    "esperado": "HTTP 200 + status success + transportadora sugerida",
+    "obtenido": "HTTP 200 — {\"status\":\"success\",\"destinyCode\":\"11001000\",\"sessionTracker\":\"38ac4826-a63f-45fb-bff2-5d55dbd53fa6\",\"carriers\":[{\"id\":\"60b4aebf8824222d50a80220\",\"deliveryCompanyId\":\"6080a75ef08a770ddd9724fd\",\"name\":\"ENVIA\",\"imgUrl\":\"https://s3.amazonaws.com/images.",
+    "estado": "PASÓ",
+    "extra": {
+      "paqueteNivel": "Paquete 1"
+    }
+  },
+  {
+    "id": "CP-05",
+    "categoria": "Seguridad",
+    "nombre": "Configuración CORS del servidor",
+    "paso": "GET /api/config (Origin: sitio-malicioso.example)",
+    "esperado": "Access-Control-Allow-Origin restringido a dominios de confianza",
+    "obtenido": "Access-Control-Allow-Origin = \"*\"",
+    "estado": "FALLÓ",
+    "extra": {
+      "hallazgo": "CORS abierto a cualquier origen (*)"
+    }
+  },
+  {
+    "id": "CP-06",
+    "categoria": "Seguridad",
+    "nombre": "Cabeceras de endurecimiento HTTP",
+    "paso": "GET /api/config",
+    "esperado": "Presencia de X-Content-Type-Options, X-Frame-Options, CSP y HSTS",
+    "obtenido": "Faltantes: x-content-type-options, x-frame-options, content-security-policy, strict-transport-security",
+    "estado": "FALLÓ",
+    "extra": {
+      "faltantes": [
+        "x-content-type-options",
+        "x-frame-options",
+        "content-security-policy",
+        "strict-transport-security"
+      ]
+    }
+  },
+  {
+    "id": "CP-07",
+    "categoria": "Seguridad",
+    "nombre": "Exposición de credenciales en endpoint público",
+    "paso": "GET /api/config",
+    "esperado": "No exponer la service_role key; solo la anon key",
+    "obtenido": "Expone anon key (aceptable) — service key no se incluye en la respuesta",
+    "estado": "PASÓ",
+    "extra": {
+      "exponeAnonKey": true
+    }
+  },
+  {
+    "id": "CP-08",
+    "categoria": "Seguridad",
+    "nombre": "Validación de formato y longitud de entradas",
+    "paso": "POST /api/crear-orden (campos de 5000 chars)",
+    "esperado": "Rechazo por formato/longitud inválida de teléfono y cédula",
+    "obtenido": "HTTP 400 — {\"status\":\"error\",\"message\":\"Error creando comprador: null value in column \\\"nombre\\\" of relation \\\"compradores\\\" violates not-null constraint\"}",
+    "estado": "FALLÓ",
+    "extra": {
+      "observacion": "No hay validación de formato ni longitud en teléfono/cédula (solo presencia)"
+    }
+  }
+]

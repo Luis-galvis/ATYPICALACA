@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (contienen claves privadas: SUPABASE_SERVICE_KEY, MIPAQUETE_API_KEY)
+.env
+.env.*
+!.env.example
+
+# Estado de modo prueba (generado en tiempo de ejecución)
+test_shipping_state.json
+
+# Logs y archivos temporales
+*.log
+.DS_Store
+Thumbs.db

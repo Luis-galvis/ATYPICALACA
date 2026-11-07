@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/api/config",
+    "n": 5,
+    "avg": 11,
+    "min": 1,
+    "max": 49
+  },
+  {
+    "path": "/api/zapatos",
+    "n": 5,
+    "avg": 4,
+    "min": 4,
+    "max": 5
+  },
+  {
+    "path": "/api/cotizar-envio",
+    "n": 3,
+    "avg": 167,
+    "min": 157,
+    "max": 187
+  },
+  {
+    "path": "/api/recientes",
+    "n": 3,
+    "avg": 141,
+    "min": 1,
+    "max": 421
+  }
+]
